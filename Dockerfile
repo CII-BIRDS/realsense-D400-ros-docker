@@ -1,4 +1,6 @@
-FROM ripl/libbot2-ros:latest
+FROM cnpcshangbo/ros-zed-dronekit-cv2:v2
+# FROM nvcr.io/nvidia/l4t-base:r32.4.2
+# FROM ripl/libbot2-ros:latest
 
 # set the version of the realsense library
 ENV LIBREALSENSE_VERSION 2.16.1
@@ -33,7 +35,7 @@ RUN cd /tmp && \
   rm v${LIBREALSENSE_VERSION}.tar.gz && \
   mkdir -p librealsense-${LIBREALSENSE_VERSION}/build && \
   cd librealsense-${LIBREALSENSE_VERSION}/build && \
-  cmake .. && \
+  cmake ../ -DBUILD_PYTHON_BINDINGS:bool=true && \
   make && \
   make install && \
   rm -rf librealsense-${LIBREALSENSE_VERSION}
