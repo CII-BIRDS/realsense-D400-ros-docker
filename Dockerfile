@@ -40,15 +40,17 @@ RUN cd /tmp && \
   make install && \
   rm -rf librealsense-${LIBREALSENSE_VERSION}
 
+# export PYTHONPATH=$PYTHONPATH:/usr/local/lib
+ENV PYTHONPATH=$PYTHONPATH:/usr/local/lib
 # install ROS package
 RUN mkdir -p /code/src && \
   cd /code/src/ && \
   wget https://github.com/intel-ros/realsense/archive/${LIBREALSENSE_ROS_VERSION}.tar.gz && \
   tar -xvzf ${LIBREALSENSE_ROS_VERSION}.tar.gz && \
   rm ${LIBREALSENSE_ROS_VERSION}.tar.gz && \
-  mv realsense-${LIBREALSENSE_ROS_VERSION}/realsense2_camera ./ && \
+  mv realsense-ros-${LIBREALSENSE_ROS_VERSION}/realsense2_camera ./ && \
   rm -rf realsense-${LIBREALSENSE_ROS_VERSION}
 
 # build ROS package
 RUN . /opt/ros/${ROS_DISTRO}/setup.sh && \
-  catkin build
+  catkin build -j2 --make-args="-j2"
