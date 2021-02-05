@@ -54,3 +54,8 @@ RUN mkdir -p /code/src && \
 # build ROS package
 RUN . /opt/ros/${ROS_DISTRO}/setup.sh && \
   catkin build -j2 --make-args="-j2"
+
+# dependencies for https://github.com/cnpcshangbo/vision_to_mavros
+RUN pip3 install transformations && \
+  pip3 install apscheduler
+
